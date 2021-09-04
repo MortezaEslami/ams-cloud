@@ -1,0 +1,47 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+  <changeSet author="Morteza" id="create_table_customer">
+        <createTable tableName="tbl_customer" >
+            <column name="ID" type="BIGINT"  autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="tbl_customer_id_pk"/>
+            </column>
+            <column name="C_FIRST_NAME" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="C_LAST_NAME" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="D_BIRTH_DATE" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="N_GENDER" type="VARCHAR2(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="N_BIRTH_PLACE_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="C_EMAIL" type="VARCHAR2(50)"/>
+            <column name="C_MOBILE" type="VARCHAR2(15)"/>
+            <column name="C_COMMENT" type="VARCHAR2(4000)"/>
+            <!--<column name="D_CREATED_DATE" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>-->
+            <column name="D_LAST_MODIFIED_DATE" type="TIMESTAMP"/>
+            <column name="N_VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Morteza" id="add_ForeignKey_customer_area">
+        <addForeignKeyConstraint baseColumnNames="N_BIRTH_PLACE_ID" baseTableName="tbl_customer"
+                                 constraintName="FK_CUSTOMER_AREA" deferrable="false"
+                                 initiallyDeferred="false"
+                                 referencedColumnNames="ID" referencedTableName="tbl_area" validate="true"/>
+    </changeSet>
+
+
+</databaseChangeLog>
+

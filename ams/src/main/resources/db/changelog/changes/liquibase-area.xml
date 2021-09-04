@@ -1,0 +1,66 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="Morteza" id="create_table_area">
+        <createTable tableName="tbl_area">
+            <column name="ID" type="BIGINT"  autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="tbl_area_id_pk"/>
+            </column>
+            <column name="N_PARENT_ID" type="BIGINT"/>
+            <column name="C_NAME" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="C_CODE" type="VARCHAR2(30)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="E_AREA_TYPE" type="VARCHAR2(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="C_COMMENT" type="VARCHAR2(4000)"/>
+            <!--<column name="D_CREATED_DATE" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>-->
+            <column name="D_LAST_MODIFIED_DATE" type="TIMESTAMP"/>
+            <column name="N_VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Morteza" id="add_ForeignKey_area_parent">
+        <addForeignKeyConstraint baseColumnNames="N_PARENT_ID" baseTableName="tbl_area"
+                                 constraintName="FK_AREA_PARENT_ID" deferrable="false"
+                                 initiallyDeferred="false"
+                                 referencedColumnNames="ID" referencedTableName="tbl_area" validate="true"/>
+    </changeSet>
+
+    <changeSet author="Morteza" id="insert_data_area_01">
+    <sql splitStatements="false" stripComments="false">
+        <![CDATA[
+                    insert into tbl_area  (ID,N_PARENT_ID,C_NAME,C_CODE,E_AREA_TYPE,C_COMMENT,N_VERSION)
+                                      values  (1,null,'Iran','Cu_Ir','0',null,0)
+    			]]>
+    </sql>
+        <sql splitStatements="false" stripComments="false">
+            <![CDATA[
+                    insert into tbl_area  (ID,N_PARENT_ID,C_NAME,C_CODE,E_AREA_TYPE,C_COMMENT,N_VERSION)
+                                      values  (2,null,'Germany','Cu_Gr','0',null,0)
+    			]]>
+        </sql>
+    <sql splitStatements="false" stripComments="false">
+        <![CDATA[
+                    insert into tbl_area  (ID,N_PARENT_ID,C_NAME,C_CODE,E_AREA_TYPE,C_COMMENT,N_VERSION)
+                                      values  (3,1,'Tehran','Ci_Teh','1',null,0)
+    			]]>
+    </sql>
+        <sql splitStatements="false" stripComments="false">
+            <![CDATA[
+                    insert into tbl_area  (ID,N_PARENT_ID,C_NAME,C_CODE,E_AREA_TYPE,C_COMMENT,N_VERSION)
+                                      values  (4,2,'Tehran','Ci_Ber','1',null,0)
+    			]]>
+        </sql>
+    </changeSet>
+
+
+</databaseChangeLog>
+

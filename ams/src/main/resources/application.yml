@@ -1,0 +1,80 @@
+spring:
+  application:
+    name: ams
+  profiles:
+    active: Development
+  banner:
+    location: banner.txt
+  messages:
+    basename: i18n/messages
+  liquibase:
+    enabled: true
+    database-change-log-table: Z_LIQ_CHANGELOG
+    database-change-log-lock-table: Z_LIQ_CHANGELOG_LOCK
+    change-log: classpath:db/changelog/liquibase-master.xml
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+# for stage and production
+#eureka:
+#  instance:
+#    hostname: ams
+#  client:
+#    registerWithEureka: true
+#    fetchRegistry: true
+#    serviceUrl:
+#      defaultZone: http://naming-server:8761/eureka/
+
+#eureka:
+#  client:
+#    registerWithEureka: true
+#    fetchRegistry: true
+#    serviceUrl:
+#      default-zone: http://localhost:8761/eureka
+
+api:
+  key: 419c3c0528ccc8d975cbde7083241503
+
+
+---
+spring:
+  profiles: Production
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://ams-db:3306/ams_prod
+    username: root
+    password: password
+
+---
+spring:
+  profiles: Stage
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://ams-db:3306/ams_stage
+    username: user
+    password: password
+
+---
+spring:
+  profiles: Development
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ams_stage?createDatabaseIfNotExist=true
+    username: root
+    password: password
+
+---
+spring:
+  profiles: Local
+  datasource:
+    url: jdbc:h2:mem:amsdb
+    username: dev
+    password: dev
+  liquibase:
+    user: dev
+    password: dev
+
+
+
+

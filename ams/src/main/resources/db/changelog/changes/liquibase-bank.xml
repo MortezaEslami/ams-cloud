@@ -1,0 +1,57 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+   <changeSet author="Morteza" id="create_table_bank">
+        <createTable tableName="tbl_bank">
+            <column name="ID" type="BIGINT"  autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="tbl_bank_id_pk"/>
+            </column>
+            <column name="N_PARENT_ID" type="BIGINT"/>
+            <column name="C_NAME" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="C_CODE" type="VARCHAR2(30)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="N_AREA_ID" type="BIGINT"/>
+            <column name="C_COMMENT" type="VARCHAR2(4000)"/>
+            <!--<column name="D_CREATED_DATE" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>-->
+            <column name="D_LAST_MODIFIED_DATE" type="TIMESTAMP"/>
+            <column name="N_VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Morteza" id="add_ForeignKey_bank_area">
+        <addForeignKeyConstraint baseColumnNames="N_AREA_ID" baseTableName="tbl_bank"
+                                 constraintName="FK_BANK_AREA" deferrable="false"
+                                 initiallyDeferred="false"
+                                 referencedColumnNames="id" referencedTableName="tbl_area" validate="true"/>
+    </changeSet>
+    <changeSet author="Morteza" id="add_ForeignKey_bank_parent">
+        <addForeignKeyConstraint baseColumnNames="N_PARENT_ID" baseTableName="tbl_bank"
+                                 constraintName="FK_BANK_PARENT_ID" deferrable="false"
+                                 initiallyDeferred="false"
+                                 referencedColumnNames="id" referencedTableName="tbl_bank" validate="true"/>
+    </changeSet>
+
+    <changeSet author="Morteza" id="insert_data_bank_01">
+        <sql splitStatements="false" stripComments="false">
+            <![CDATA[
+                    insert into tbl_bank  (id,N_PARENT_ID,C_NAME,C_CODE,N_AREA_ID,C_COMMENT,N_VERSION)
+                                      values  (1,null,'First Bank','Fr_Ba',3,null,0)
+    			]]>
+        </sql>
+        <sql splitStatements="false" stripComments="false">
+            <![CDATA[
+                    insert into tbl_bank  (id,N_PARENT_ID,C_NAME,C_CODE,N_AREA_ID,C_COMMENT,N_VERSION)
+                                      values  (2,null,'Second Bank','Se_Ba',4,null,0)
+    			]]>
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
+

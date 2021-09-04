@@ -1,0 +1,9 @@
+      .o.       ooo        ooooo  .oooooo..o
+     .888.      `88.       .888' d8P'    `Y8
+    .8"888.      888b     d'888  Y88bo.
+   .8' `888.     8 Y88. .P  888   `"Y8888o.
+  .88ooo8888.    8  `888'   888       `"Y88b
+ .8'     `888.   8    Y     888  oo     .d8P
+o88o     o8888o o8o        o888o 8""88888P'
+        Account Managing System
+

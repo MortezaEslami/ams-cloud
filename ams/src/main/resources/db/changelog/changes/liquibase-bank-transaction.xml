@@ -1,0 +1,45 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+   <changeSet author="Morteza" id="create_table_bank_transaction">
+        <createTable tableName="tbl_bank_transaction">
+            <column name="ID" type="BIGINT"  autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="tbl_bank_transaction_id_pk"/>
+            </column>
+            <column name="C_ORIGIN_ACCOUNT_NUMBER" type="VARCHAR2(20)"/>
+            <column name="C_DESTINATION_ACCOUNT_NUMBER" type="VARCHAR2(15)"/>
+            <column name="E_TRANSACTION_TYPE" type="VARCHAR2(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="N_AMOUNT" type="DECIMAL(10,2)"/>
+            <column name="N_CONVERTED_AMOUNT" type="DECIMAL(10,2)"/>
+            <column name="E_STATUS" type="VARCHAR2(15)"/>
+            <column name="E_CURRENCY_TYPE" type="VARCHAR2(20)"/>
+            <column name="D_TRANSACTION_TIME" type="TIMESTAMP"/>
+            <column name="C_tracking_code" type="VARCHAR2(40)"/>
+            <column name="C_COMMENT" type="VARCHAR2(4000)"/>
+           <!-- <column name="D_CREATED_DATE" type="TIMESTAMP">
+            </column>-->
+            <column name="D_LAST_MODIFIED_DATE" type="TIMESTAMP"/>
+            <column name="N_VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Morteza" id="add_ForeignKey_transaction_origin_account">
+        <addForeignKeyConstraint baseColumnNames="C_ORIGIN_ACCOUNT_NUMBER" baseTableName="tbl_bank_transaction"
+                                 constraintName="FK_TRANSACTION_ORIGIN_ACCOUNT" deferrable="false"
+                                 initiallyDeferred="false"
+                                 referencedColumnNames="C_ACCOUNT_NUMBER" referencedTableName="tbl_bank_account" validate="true"/>
+    </changeSet>
+    <changeSet author="Morteza" id="add_ForeignKey_transaction_destination_account">
+        <addForeignKeyConstraint baseColumnNames="C_DESTINATION_ACCOUNT_NUMBER" baseTableName="tbl_bank_transaction"
+                                 constraintName="FK_TRANSACTION_DESTINATION_ACCOUNT" deferrable="false"
+                                 initiallyDeferred="false"
+                                 referencedColumnNames="C_ACCOUNT_NUMBER" referencedTableName="tbl_bank_account" validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>
+

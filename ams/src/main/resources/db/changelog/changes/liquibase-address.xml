@@ -1,0 +1,53 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet author="Morteza" id="create_table_address">
+        <createTable tableName="tbl_address">
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="tbl_address_id_pk"/>
+            </column>
+            <column name="N_CUSTOMER_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="N_AREA_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="C_FULL_ADDRESS" type="VARCHAR2(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="C_POSTAL_CODE" type="VARCHAR2(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="E_ADDRESS_TYPE" type="VARCHAR2(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="N_LATITUDE" type="DECIMAL(10,8)"/>
+            <column name="N_LONGITUDE" type="DECIMAL(10,8)"/>
+            <column name="C_TEL" type="VARCHAR2(12)"/>
+            <column name="C_COMMENT" type="VARCHAR2(4000)"/>
+            <!--<column name="D_CREATED_DATE" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>-->
+            <column name="D_LAST_MODIFIED_DATE" type="TIMESTAMP"/>
+            <column name="N_VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Morteza" id="add_ForeignKey_address_customer">
+        <addForeignKeyConstraint baseColumnNames="N_CUSTOMER_ID" baseTableName="tbl_address"
+                                 constraintName="FK_ADDRESS_CUSTOMER" deferrable="false"
+                                 initiallyDeferred="false"
+                                 referencedColumnNames="ID" referencedTableName="tbl_customer" validate="true"/>
+    </changeSet>
+    <changeSet author="Morteza" id="add_ForeignKey_address_area">
+        <addForeignKeyConstraint baseColumnNames="N_AREA_ID" baseTableName="tbl_address"
+                                 constraintName="FK_ADDRESS_AREA" deferrable="false"
+                                 initiallyDeferred="false"
+                                 referencedColumnNames="ID" referencedTableName="tbl_area" validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>
+

@@ -1,0 +1,75 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+   <changeSet author="Morteza" id="create_table_bank_account">
+        <createTable tableName="tbl_bank_account" >
+            <column name="ID" type="bigint"  autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="tbl_bank_account_id_pk"/>
+            </column>
+            <column name="N_CUSTOMER_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="N_BANK_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="C_ACCOUNT_NUMBER" type="VARCHAR2(20)">
+                <constraints unique="true"/>
+            </column>
+            <column name="C_CARD_NUMBER" type="VARCHAR2(16)">
+                <constraints unique="true"/>
+            </column>
+            <column name="N_BALANCE" type="DECIMAL(10,2)"/>
+            <column name="E_ACCOUNT_STATUS" type="VARCHAR2(15)"/>
+            <column name="E_ACCOUNT_TYPE" type="VARCHAR2(20)"/>
+            <column name="E_CURRENCY_TYPE" type="VARCHAR2(20)"/>
+            <column name="C_COMMENT" type="VARCHAR2(4000)"/>
+            <!--<column name="D_CREATED_DATE" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>-->
+            <column name="D_LAST_MODIFIED_DATE" type="TIMESTAMP"/>
+            <column name="N_VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Morteza" id="add_ForeignKey_BankAccount_customer">
+        <addForeignKeyConstraint baseColumnNames="N_CUSTOMER_ID" baseTableName="tbl_bank_account"
+                                 constraintName="FK_BANK_ACCOUNT_CUSTOMER" deferrable="false"
+                                 initiallyDeferred="false"
+                                 referencedColumnNames="ID" referencedTableName="tbl_customer" validate="true"/>
+    </changeSet>
+
+
+
+    <!-- Bank Account Audit -->
+    <changeSet author="Morteza" id="create_table_bank_account_aud">
+        <createTable tableName="tbl_bank_account_aud">
+            <column name="ID" type="BIGINT"/>
+            <column name="N_CUSTOMER_ID" type="BIGINT"/>
+            <column name="N_bank_ID" type="BIGINT"/>
+            <column name="C_ACCOUNT_NUMBER" type="VARCHAR2(20)"/>
+            <column name="C_CARD_NUMBER" type="VARCHAR2(20)"/>
+            <column name="N_BALANCE" type="DECIMAL(10,2)"/>
+            <column name="E_ACCOUNT_STATUS" type="VARCHAR2(15)"/>
+            <column name="E_ACCOUNT_TYPE" type="VARCHAR2(20)"/>
+            <column name="E_CURRENCY_TYPE" type="VARCHAR2(20)"/>
+            <column name="C_COMMENT" type="VARCHAR2(4000)"/>
+            <column name="REV" type="INT"/>
+            <column name="REVTYPE" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+
+
+    <!-- Bank Account Aud Foreign Key Constraint to revinfo-->
+    <changeSet author="morteza" id="add_ForeignKey_BankAccount-AUD-TO-REVINFO">
+        <addForeignKeyConstraint baseColumnNames="REV" baseTableName="tbl_bank_account_aud"
+                                 constraintName="FK_BANK_ACCOUNT_REV"
+                                 referencedColumnNames="REV" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+
+
+
+</databaseChangeLog>
+

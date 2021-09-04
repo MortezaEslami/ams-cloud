@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  ams:
+    image: ams:1.1.0
+    ports:
+      - "8080"
+#     - "8080:8080"
+    environment:
+      - APP_SLEEP=180
+      - SPRING_DATASOURCE_URL=jdbc:mysql://ams-db:3306/ams_stage
+    depends_on:
+      - naming-server
+      - ams-db
+    networks:
+      - spring-cloud-network
+
+  gateway:
+    image: gateway:1.1.0
+    container_name: gateway
+    ports:
+      - "8762:8762"
+    depends_on:
+      - ams
+      - naming-server
+    networks:
+      - spring-cloud-network
+
+  naming-server:
+    image: naming-server:1.1.0
+    container_name: naming-server
+    ports:
+      - "8761:8761"
+    networks:
+      - spring-cloud-network
+
+  ams-db:
+    image: mysql/mysql-server:5.7.30
+    restart: always
+    volumes:
+      - ~/volumes/ams/mysql/:/var/lib/mysql/
+    environment:
+      MYSQL_DATABASE: 'ams_stage'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    networks:
+      - spring-cloud-network
+
+networks:
+  spring-cloud-network:
+    driver: bridge
